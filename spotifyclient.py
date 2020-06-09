@@ -25,7 +25,6 @@ class SpotifyClient(object):
         response_json = response.json()
 
         # retrieves list of track objects from the paging object response
-        print(response_json)
         tracks = [track_item for track_item in response_json["items"]]
 
         return tracks
