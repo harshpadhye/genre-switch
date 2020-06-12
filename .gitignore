@@ -1,0 +1,4 @@
+# IGNORE local cache
+spotipy/.cache-harshpadhye
+secrets.py
+
