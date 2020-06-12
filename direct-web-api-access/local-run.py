@@ -12,8 +12,8 @@ def run():
     track_ids = [track["id"] for track in top_tracks]
 
     # add them to the top tracks playlist
-    # added_to_playlist = spotify_client.add_top_tracks(track_ids)
-
+    added_to_playlist = spotify_client.add_top_tracks(track_ids)
+    print(*added_to_playlist)
     # prints out the track names and their artists
     # if added_to_playlist:
     for track in top_tracks:
