@@ -1,4 +1,4 @@
-# IGNORE local cache
-spotipy/.cache-harshpadhye
-secrets.py
-
+# IGNORE local cache, client secrets
+.cache-harshpadhye
+secrets.txt
+run.sh
