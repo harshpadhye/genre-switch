@@ -33,24 +33,45 @@ class SpotipyClient:
         # Spotify allows for the creation of duplicate playlist names
         user_playlists = self.sp.current_user_playlists(limit=50, offset=0)
         exists = False
-        id = None
+        pl_id = None
 
         # Iterates through playlist objects and finds the appropriate playlist id
         for pl in user_playlists["items"]:
            if pl["name"] == pl_name:
-                id = pl["id"]
+                pl_id = pl["id"]
                 exists = True
                 break
 
         # Dedicated playlist does not exist; let's create it
         if not exists:
-            id = self.sp.user_playlist_create(user=pl_user, name=pl_name, description=pl_description, public=pl_public)["id"]
+            pl_id = self.sp.user_playlist_create(user=pl_user, name=pl_name, description=pl_description, public=pl_public)["id"]
 
         # return the new/dedicated playlist id
-        return id
+        return pl_id
     
 
     # Given a playlist id and a list of track ids,
     # replaces current tracks in the playlist with the new tracks
     def rewrite_playlist(self, pl_user, pl_id, track_ids):
         self.sp.user_playlist_replace_tracks(user=pl_user, playlist_id=pl_id, tracks=track_ids)
+
+
+    # Returns the average track popularity across all songs in the user's playlists
+    # Don't consider duplicate tracks across playlists
+    def get_average_track_popularity(self, user):
+        # first, retrieve the user's playlists (cap it at 50)
+        user_playlists = self.sp.current_user_playlists(limit=50, offset=0)["items"]
+
+        # now combine all tracks from the user's playlists
+        # removes duplicates via the set() method
+        tracks = set()
+        for playlist in user_playlists:
+
+            # Need to grab the popularity of each track in all of the users playlists
+                
+        # now we can extract a list of track popularities from the unique tracks
+        tracks = list(tracks)
+        track_popularities = [item["popularity"] for item in tracks]
+
+        # returns the average of the tracks' popularities, rounded to two decimals
+        return round(sum(track_popularities) / len(track_popularities), 2) 

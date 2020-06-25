@@ -25,3 +25,8 @@ if token:
     client.rewrite_playlist(pl_user=username, pl_id=my_recent_fav_playlist_id, track_ids=top_track_ids)
 
     print("\nAll done! Check your Spotify playlist library.")
+
+    print(f"Analyzing {username}'s indie factor...")
+
+    indie_factor = 100 - client.get_average_track_popularity(user=username)
+    print(f"{username} is {indie_factor}% indie")
