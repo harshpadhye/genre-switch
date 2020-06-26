@@ -59,19 +59,21 @@ class SpotipyClient:
     # Returns the average track popularity across all songs in the user's playlists
     # Don't consider duplicate tracks across playlists
     def get_average_track_popularity(self, user):
-        # first, retrieve the user's playlists (cap it at 50)
-        user_playlists = self.sp.current_user_playlists(limit=50, offset=0)["items"]
-
+        # first, retrieve the user's playlists (cap it at 30)
+        user_playlists = self.sp.current_user_playlists(limit=30, offset=0)["items"]
+        
         # now combine all tracks from the user's playlists
-        # removes duplicates via the set() method
-        tracks = set()
+        # removes duplicates via the dictionary
+        dictionary = {}
         for playlist in user_playlists:
+            tracks = self.sp.playlist_tracks(playlist['id'], fields='items.track.popularity,items.track.name')
+            for item in tracks["items"]:
+                name = str(item['track']['name'])
+                pop = int(item['track']['popularity'])
+                dictionary.setdefault(name, pop)
 
-            # Need to grab the popularity of each track in all of the users playlists
-                
-        # now we can extract a list of track popularities from the unique tracks
-        tracks = list(tracks)
-        track_popularities = [item["popularity"] for item in tracks]
+        # gets popularity values from dictionary
+        popularity = dictionary.values()
 
         # returns the average of the tracks' popularities, rounded to two decimals
-        return round(sum(track_popularities) / len(track_popularities), 2) 
+        return (100 - (round(sum(popularity) / len(popularity), 2)))

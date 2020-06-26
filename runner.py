@@ -3,7 +3,7 @@ import spotipy.util as util
 from spotipy_client import SpotipyClient
 
 # Required scopes to access top tracks, modify playlists
-scope = "user-top-read playlist-modify-public playlist-modify-private "
+scope = "user-top-read playlist-modify-public playlist-modify-private playlist-read-private"
 
 username = input("Provide a username / Spotify ID: ")
 
@@ -28,5 +28,5 @@ if token:
 
     print(f"Analyzing {username}'s indie factor...")
 
-    indie_factor = 100 - client.get_average_track_popularity(user=username)
+    indie_factor = client.get_average_track_popularity(user=username)
     print(f"{username} is {indie_factor}% indie")
