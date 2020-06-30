@@ -107,7 +107,6 @@ class SpotipyClient:
 
         # Finds new tracks based on genre seeds and tuneable track characteristics
         new_tracks = self.sp.recommendations(seed_genres=genre_seeds, limit=10, target_danceability=avgs["danceability"], target_energy=avgs[
-                                             "energy"], target_instrumentalness=avgs["instrumentalness"], target_speechiness=avgs["speechiness"], target_tempo=avgs["tempo"], target_valence=avgs["valence"])
-
+                                             "energy"], target_instrumentalness=avgs["instrumentalness"], target_speechiness=avgs["speechiness"], target_tempo=avgs["tempo"], target_valence=avgs["valence"], max_popularity=20)
 
         return [track["id"] for track in new_tracks["tracks"]]
