@@ -1,5 +1,4 @@
 # IGNORE local cache, client secrets
-.cache-harshpadhye
-.cache-klenatown
+.cache-*
 secrets.txt
 run.sh
